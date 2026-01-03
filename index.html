@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raízes de Paz, Frutos de Esperança</title>
+    <style>
+        :root {
+            --bg: #0a0f1d;
+            --card: #161e2e;
+            --primary: #3b82f6;
+            --coral: #ff5a5f;
+            --text: #f8fafc;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            scroll-behavior: smooth;
+            overflow-x: hidden; /* Evita scroll lateral indesejado */
+        }
+
+        /* BARRA DE NAVEGAÇÃO MOBILE */
+        nav {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(10, 15, 29, 0.98);
+            padding: 10px 20px; 
+            display: flex; 
+            justify-content: space-between;
+            align-items: center; 
+            z-index: 1000; 
+            border-bottom: 1px solid #2d3748;
+            box-sizing: border-box;
+        }
+        
+        .nav-logo { font-weight: bold; font-size: 0.9rem; color: var(--text); }
+        .nav-links { display: flex; gap: 15px; }
+        .nav-links a { color: white; text-decoration: none; font-size: 0.8rem; font-weight: 500; }
+
+        @media (max-width: 600px) {
+            nav { flex-direction: column; gap: 8px; padding: 10px 5px; }
+            .nav-logo { font-size: 0.8rem; text-align: center; }
+            .nav-links { gap: 10px; }
+            .nav-links a { font-size: 0.7rem; }
+            .hero { margin-top: 80px; }
+        }
+
+        .hero {
+            height: 60vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            background: radial-gradient(circle at center, #1e293b 0%, #0a0f1d 100%);
+            padding: 20px;
+            margin-top: 50px;
+        }
+        .hero h1 { font-size: clamp(1.8rem, 5vw, 3rem); margin: 0; }
+        .hero h2 { font-size: clamp(1rem, 3vw, 1.4rem); color: var(--primary); letter-spacing: 3px; margin-top: 10px; }
+
+        section { padding: 60px 20px; max-width: 900px; margin: 0 auto; }
+        
+        .intro-card { 
+            background: var(--card); 
+            padding: 35px; 
+            border-radius: 12px; 
+            border-left: 5px solid var(--primary);
+            line-height: 1.6;
+        }
+        .intro-card h3 { color: var(--primary); text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; margin-bottom: 5px; }
+        
+        .quote-box {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            font-style: italic;
+            border-left: 3px solid var(--coral);
+            color: #e2e8f0;
+        }
+
+        /* TIMELINE - CONFIGURAÇÃO GERAL (DESKTOP) */
+        .timeline { position: relative; padding: 30px 0; }
+        
+        /* Linha central */
+        .timeline::after { content: ''; position: absolute; width: 4px; background: #2d3748; top: 0; bottom: 0; left: 50%; margin-left: -2px; }
+        
+        .container { padding: 10px 40px; position: relative; width: 50%; box-sizing: border-box; }
+        .left { left: 0; text-align: right; }
+        .right { left: 50%; text-align: left; }
+        
+        /* Bolinhas da timeline */
+        .container::after { content: ''; position: absolute; width: 16px; height: 16px; right: -8px; background: var(--text); border: 3px solid var(--primary); top: 20px; border-radius: 50%; z-index: 1; }
+        .right::after { left: -8px; }
+
+        /* CORREÇÃO DA TIMELINE PARA TELEMÓVEL */
+        @media (max-width: 600px) {
+            /* Move a linha para a esquerda */
+            .timeline::after { left: 31px; }
+            
+            /* Caixas ocupam a largura toda e encostam à esquerda */
+            .container { width: 100%; padding-left: 70px; padding-right: 25px; text-align: left; }
+            
+            /* Remove o posicionamento "zig-zag" */
+            .left, .right { left: 0; }
+            
+            /* Ajusta as bolinhas para a esquerda em TODAS as caixas */
+            .container::after { left: 23px; right: auto; }
+        }
+
+        .content { padding: 20px; background: rgba(255,255,255,0.05); border-radius: 8px; border-top: 4px solid var(--primary); }
+        .t-color-1 .content { border-top-color: var(--primary); }
+        .t-color-2 .content { border-top-color: var(--coral); }
+        .t-color-3 .content { border-top-color: var(--warning); }
+        .t-color-4 .content { border-top-color: var(--success); }
+        .t-color-5 .content { border-top-color: #a855f7; }
+        .t-color-6 .content { border-top-color: #06b6d4; }
+
+        .btn-ver-mais { 
+            background: transparent; color: var(--primary); border: 1px solid var(--primary); 
+            padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-top: 15px; 
+            font-size: 0.8rem; transition: 0.3s; display: inline-block; text-decoration: none; font-weight: bold;
+        }
+        .btn-ver-mais:hover { background: var(--primary); color: white; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+        .grid-item { 
+            background: var(--card); padding: 30px 10px; border-radius: 12px; text-align: center; 
+            border: 1px solid #2d3748; position: relative; display: flex; flex-direction: column; align-items: center;
+        }
+
+        .tag { position: absolute; top: 10px; right: 10px; background: var(--coral); color: white; font-size: 0.6rem; font-weight: bold; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
+
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); overflow-y: auto; }
+        .modal-content { background: var(--card); margin: 10% auto; padding: 25px; width: 85%; max-width: 600px; border-radius: 12px; border: 1px solid var(--primary); position: relative; }
+        .close { position: absolute; right: 15px; top: 5px; font-size: 32px; cursor: pointer; color: #aaa; }
+
+        iframe { width: 100%; height: 250px; border-radius: 8px; border: none; margin: 15px 0; }
+
+        footer { text-align: center; padding: 40px; color: #64748b; font-size: 0.8rem; border-top: 1px solid #1e293b; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-logo">Raízes de Paz, Frutos de Esperança</div>
+    <div class="nav-links">
+        <a href="#historia">História</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#explorar">Explorar</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <h1>Raízes de Paz, Frutos de Esperança</h1>
+    <h2>Segunda Guerra Mundial</h2>
+    <p style="margin-top:20px; font-style:italic; opacity:0.8; font-size: 0.9rem;">“A paz não pode ser mantida pela força; só pode ser alcançada pela compreensão.” — Einstein</p>
+</section>
+
+<section id="historia">
+    <div class="intro-card">
+        <h3>Contexto Histórico</h3>
+        <h2>O Holocausto</h2>
+        <p>O Holocausto foi o assassinato sistemático e burocrático de seis milhões de judeus, e de milhões de outras pessoas, pelo regime nazi e os seus colaboradores durante a Segunda Guerra Mundial.</p>
+        <p>Este período baseou-se em três pilares: <span style="color:var(--coral); font-weight:bold;">Ódio, Racismo e Negação da dignidade humana.</span></p>
+        
+        <div class="quote-box">
+            "Aqueles que não conseguem lembrar o passado estão condenados a repeti-lo."
+            <br><span style="color: var(--primary); font-size: 0.8rem; font-style: normal; font-weight: bold;">— George Santayana</span>
+        </div>
+    </div>
+</section>
+
+<section id="timeline">
+    <h2 style="text-align:center; margin-bottom: 20px;">Linha Cronológica</h2>
+    <div class="timeline">
+        <div class="container left t-color-1"><div class="content"><h3>Antecedentes</h3><button class="btn-ver-mais" onclick="openModal('t1')">Ver +</button></div></div>
+        <div class="container right t-color-2"><div class="content"><h3>O Conflito</h3><button class="btn-ver-mais" onclick="openModal('t2')">Ver +</button></div></div>
+        <div class="container left t-color-3"><div class="content"><h3>O Holocausto</h3><button class="btn-ver-mais" onclick="openModal('t3')">Ver +</button></div></div>
+        <div class="container right t-color-4"><div class="content"><h3>Resistência</h3><button class="btn-ver-mais" onclick="openModal('t4')">Ver +</button></div></div>
+        <div class="container left t-color-5"><div class="content"><h3>Fim da Guerra</h3><button class="btn-ver-mais" onclick="openModal('t5')">Ver +</button></div></div>
+        <div class="container right t-color-6"><div class="content"><h3>Paz (1948)</h3><button class="btn-ver-mais" onclick="openModal('t6')">Ver +</button></div></div>
+    </div>
+</section>
+
+<section id="explorar">
+    <h2 style="text-align:center; margin-bottom: 20px;">Exploração Histórica</h2>
+    <div class="grid">
+        <div class="grid-item"><span class="tag">Documento</span><h3>Direitos Humanos</h3><button class="btn-ver-mais" onclick="openModal('m-dudh')">Ver +</button></div>
+        <div class="grid-item"><span class="tag">Relatos</span><h3>Testemunhos</h3><button class="btn-ver-mais" onclick="openModal('m-test')">Ver +</button></div>
+        <div class="grid-item"><span class="tag">Livro</span><h3>Literatura</h3><button class="btn-ver-mais" onclick="openModal('m-lit')">Ver +</button></div>
+        <div class="grid-item"><span class="tag">Filme</span><h3>Cinema</h3><button class="btn-ver-mais" onclick="openModal('m-cine')">Ver +</button></div>
+        <div class="grid-item"><span class="tag">Fotos</span><h3>Fotografias</h3><button class="btn-ver-mais" onclick="openModal('m-foto')">Ver +</button></div>
+    </div>
+</section>
+
+<section id="sobre">
+    <div class="about-box">
+        <h2>Sobre o Projeto</h2>
+        <p>Desenvolvido para a disciplina de História do AE Oliveirinha.</p>
+    </div>
+</section>
+
+<footer>Agrupamento de Escolas de Oliveirinha | 2026</footer>
+
+<div id="t1" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('t1')">&times;</span><h2>Antecedentes</h2><p>Instabilidade política e económica que permitiu a ascensão de ideologias totalitárias.</p></div></div>
+<div id="t2" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('t2')">&times;</span><h2>O Conflito</h2><p>1939-1945: Mobilização total e destruição em escala global.</p></div></div>
+<div id="t3" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('t3')">&times;</span><h2>O Holocausto</h2><p>Campos de concentração e a perseguição sistemática de minorias.</p></div></div>
+<div id="t4" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('t4')">&times;</span><h2>Resistência</h2><p>Aristides de Sousa Mendes e outros heróis anónimos que salvaram milhares.</p></div></div>
+<div id="t5" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('t5')">&times;</span><h2>Fim da Guerra</h2><p>Rendição da Alemanha e libertação dos sobreviventes.</p></div></div>
+<div id="t6" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('t6')">&times;</span><h2>Paz (1948)</h2><p>Criação da Declaração Universal dos Direitos Humanos.</p></div></div>
+
+<div id="m-dudh" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('m-dudh')">&times;</span><h2>Direitos Humanos</h2><p>Consulte a DUDH oficial:</p><br><a href="https://www.amnistia.pt/declaracao-universal-dos-direitos-humanos/" target="_blank" class="btn-ver-mais">Abrir Documento</a></div></div>
+
+<div id="m-test" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('m-test')">&times;</span><h2>Relatos Reais</h2><p>Arquivo do canal Memoirs of WWII:</p><br><a href="https://www.youtube.com/@MemoirsofWWII" target="_blank" class="btn-ver-mais">Ver no YouTube</a></div></div>
+
+<div id="m-foto" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('m-foto')">&times;</span><h2>Fotografias</h2><p>Arquivo Histórico USHMM:</p><br><a href="https://encyclopedia.ushmm.org/content/pt-br/gallery/world-war-ii-in-europe-photographs" target="_blank" class="btn-ver-mais">Ver Fotos</a></div></div>
+
+<div id="m-lit" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('m-lit')">&times;</span><h2>Literatura</h2><p><strong>O Mundo em que Vivi (Ilse Losa):</strong> Autobiografia na 2ª Guerra Mundial.</p><hr style="opacity:0.2; margin:15px 0;"><p><strong>O Diário de Anne Frank:</strong> Testemunho imortal.</p></div></div>
+
+<div id="m-cine" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('m-cine')">&times;</span><h2>Cinema (Trailers)</h2>
+    <p>A Lista de Schindler</p>
+    <iframe src="https://www.youtube.com/embed/gG22XNhtnoY"></iframe>
+    <hr style="opacity:0.1; margin:10px 0;">
+    <p>O Pianista</p>
+    <iframe src="https://www.youtube.com/embed/u_jE7-6Uv7E"></iframe>
+</div></div>
+
+<script>
+    function openModal(id) { document.getElementById(id).style.display = "block"; }
+    function closeModal(id) { 
+        var modal = document.getElementById(id);
+        var iframes = modal.getElementsByTagName('iframe');
+        for (var i = 0; i < iframes.length; i++) {
+            var src = iframes[i].src;
+            iframes[i].src = src; 
+        }
+        modal.style.display = "none"; 
+    }
+    window.onclick = function(e) { if(e.target.className === 'modal') { closeModal(e.target.id); } }
+</script>
+</body>
+</html>
